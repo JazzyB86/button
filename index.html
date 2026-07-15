@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Scan</title>
+    <style>
+        body { 
+            margin: 0; 
+            background-color: #000; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+        }
+        video { 
+            width: 100%; 
+            max-width: 800px;
+            max-height: 100vh; /* Prevents the video from being taller than the screen */
+        }
+    </style>
+</head>
+<body>
+
+    <video id="myVideo" autoplay muted playsinline>
+        <source src="IDVideo720Update.mp4" type="video/mp4">
+    </video>
+
+    <script>
+        const video = document.getElementById('myVideo');
+        
+        // The URL you want to redirect to after the video finishes
+        const redirectUrl = "https://linktr.ee/kyber_cantina";
+
+        // Listen for the exact moment the video finishes playing
+        video.addEventListener('ended', () => {
+            window.location.href = redirectUrl;
+        });
+    </script>
+</body>
+</html>
