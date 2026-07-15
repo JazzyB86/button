@@ -12,30 +12,95 @@
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
+            height: 100dvh; 
+            overflow: hidden; 
         }
+
+        .media-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: center;
+        }
+
         video { 
             width: 100%; 
-            max-width: 800px;
-            max-height: 100vh; /* Prevents the video from being taller than the screen */
+            height: 100%;
+            object-fit: contain; 
+        }
+
+        #customButton {
+            position: absolute;
+            bottom: 15%; 
+            left: 50%; 
+            
+            /* Initial state: invisible and centered */
+            transform: translateX(-50%) scale(1); 
+            width: 250px; 
+            
+            opacity: 0; 
+            pointer-events: none; 
+            transition: opacity 1s ease-in-out; 
+            z-index: 10; 
+        }
+
+        /* 
+          This defines the actual "pulse" breathing effect.
+          It scales the button up slightly by 5%, then back down.
+        */
+        @keyframes pulseAnimation {
+            0%   { transform: translateX(-50%) scale(1); }
+            50%  { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        /* Added by JS after 10 seconds: makes it visible AND starts the pulse */
+        .show-button {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            /* Runs the pulse loop infinitely, taking 2 seconds per breath */
+            animation: pulseAnimation 2s infinite ease-in-out; 
+        }
+
+        #customButton img {
+            width: 100%;
+            height: auto;
+            border: none;
+            display: block;
         }
     </style>
 </head>
 <body>
+    <div class="media-container">
+        <!-- Your Video -->
+        <video id="myVideo" autoplay muted playsinline>
+            <source src="IDVideo720Update.mp4" type="video/mp4">
+        </video>
 
-    <video id="myVideo" autoplay muted playsinline>
-        <source src="IDVideo720Update.mp4" type="video/mp4">
-    </video>
+        <!-- Your Custom Button (Use a clean PNG here for perfect transparency) -->
+        <a href="https://linktr.ee/kyber_cantina" id="customButton">
+            <img src="continue2.png" alt="Click Here">
+        </a>
+    </div>
 
     <script>
         const video = document.getElementById('myVideo');
-        
-        // The URL you want to redirect to after the video finishes
+        const button = document.getElementById('customButton');
         const redirectUrl = "https://linktr.ee/kyber_cantina";
+        
+        // 1. Show the button and start the CSS pulse after 10 seconds
+        const secondsToWait = 10; 
+        setTimeout(() => {
+            button.classList.add('show-button');
+        }, secondsToWait * 1000); 
 
-        // Listen for the exact moment the video finishes playing
+        // 2. Auto-redirect when the long video finally ends (if they haven't clicked)
         video.addEventListener('ended', () => {
             window.location.href = redirectUrl;
         });
+
     </script>
 </body>
 </html>
